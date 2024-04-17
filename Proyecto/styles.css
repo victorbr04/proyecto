@@ -1,0 +1,360 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    margin-bottom: 70px;
+    width: 100vw;
+    overflow-y: auto; /* Hace que aparezca la barra de desplazamiento vertical automáticamente según sea necesario */
+    overflow-x: hidden; /* Oculta la barra de desplazamiento horizontal */
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #007bff;    
+    color: #fff;
+    text-align: center;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+header {
+    background-color: #007bff;
+    padding: 10px 0;
+    color: #fff;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+.header-buttons {
+    overflow: hidden; /* Para contener los elementos flotantes */
+    text-align: right; /* Alinear los botones a la derecha */
+}
+
+.btn {
+    color: #fff;
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid #fff;
+    border-radius: 3px;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+#add-camera-btn {
+    float: left; /* Colocar el botón "Agregar Cámara" a la izquierda */
+    margin-right: 10px; /* Espacio entre el botón "Agregar Cámara" y "Eliminar Cámara" */
+}
+
+#delete-camera-btn {
+    float: left; 
+    margin-right: 10px; 
+}
+
+#inicio-btn {
+    float: right; 
+    margin-right: 10px; 
+}
+
+#logout-btn {
+    float: right; /* Colocar el botón "Cerrar Sesión" a la derecha */
+    margin-right: 10px;
+}
+
+#cuenta-btn {
+    float: right; 
+    margin-right: 10px;
+}
+
+#usuarios-btn {
+    float: right; 
+    margin-right: 10px;
+}
+
+.rol {
+    font-size: small;
+}
+
+.camera-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 0.33fr));
+    gap: 20px;
+}
+
+
+.portada {
+    cursor: pointer;
+    width: 100%; /* Ajusta el tamaño de la imagen */
+    height: auto;
+}
+
+.ventana-video {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    width: calc(1024px - (1024px * 0.10)); /* Ajusta el ancho de la ventana emergente */
+    height: calc(576px - (576px * 0.10)); /* Ajusta la altura de la ventana emergente */
+    max-width: 90vw; /* Limita el ancho máximo de la ventana emergente al 90% del ancho de la ventana del navegador */
+    max-height: 90vh; /* Limita la altura máxima de la ventana emergente al 90% de la altura de la ventana del navegador */
+    overflow: hidden; /* Elimina las barras de desplazamiento */
+    padding-bottom: 40px; /* Añade un margen en la parte inferior */
+    border-radius: 5px;
+}
+
+.cerrar-video {
+    position: absolute;
+    top: 0px; /* Ajusta la distancia desde la parte superior */
+    right: 5px; /* Ajusta la distancia desde el lado derecho */
+    cursor: pointer;
+    font-size: 20px;
+    color: #888;
+}
+.cerrar-video:hover {
+    color: #555;
+}
+
+#video {
+    width: 100%;
+    height: calc(100% - 15px); /* Ajusta el tamaño del video teniendo en cuenta el margen superior e inferior */
+}
+
+#btnFullScreen {
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#btnFullScreen:hover {
+    background-color: #0056b3;
+}
+
+.camera h2 {
+    text-align: center;
+}
+
+.camera img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+/* Estilos para el formulario de agregar cámara */
+/* Estilos para la ventana modal */
+.modal {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Estilos para el contenido de la ventana modal */
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 5px;
+    position: relative;
+    text-align: center; 
+
+}
+
+/* Estilos para el formulario dentro de la ventana modal */
+.modal-content form {
+    margin-top: 20px;
+}
+
+/* Estilos para el select dentro del formulario */
+.modal-content select {
+    width: 35%;
+    padding: 8px;
+    margin: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 15px;
+}
+
+.modal-content input {
+    width: auto;
+    padding: 7px;
+    margin: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 15px;
+}
+
+/* Estilos para el botón de enviar dentro del formulario */
+.modal-content button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.modal-content button[type="submit"]:hover {
+    background-color: #0056b3;
+    transition: background-color 0.3s ease;
+}
+
+/* Estilos para el botón de cierre */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.container-u {
+    display: flex;
+    justify-content: space-between; /* Para distribuir los elementos horizontalmente */
+    width: 80%;
+      margin: 0 auto;
+      padding-top: 20px;
+  }
+  
+   .container-user {
+    flex: 2; 
+    padding: 0px 40px 0px 0px;
+  } 
+  
+  .sidebar {
+    display: flex;
+    flex-direction: column; /* Para que los elementos se apilen uno encima del otro */
+    flex: 2;
+  }
+  
+  .usuario {
+      background-color: #f9f9f9;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      position: relative;
+
+  }
+  
+  .create-user-form,
+  .create-group-form {
+      background-color: #f9f9f9;
+      padding: 20px;
+      border-radius: 5px;
+      margin-bottom: 30px;
+  }
+
+  .container-u select {
+    width: 25%;
+    padding: 7px;
+    margin: 0px 5px 15px 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.container-u input {
+    width: auto;
+    padding: 7px;
+    margin: 0px 5px 15px 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+.menos {
+    background-color: #d10000;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    /* position: absolute;
+    right: 0; */
+}
+
+.menos:hover {
+    background-color: #a50404;
+    transition: background-color 0.3s ease;
+}
+
+.mas {
+    background-color: #007bff;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+
+}
+
+.mas:hover {
+    background-color: #0056b3;
+    transition: background-color 0.3s ease;
+}
+
+.container-u #eliminar {
+position: absolute;
+right: 20px; 
+top: 20px;
+}
+
+select option {
+    font-size: 14px;
+    background-color: #f0f0f0;
+    color: #333;
+    margin-bottom: 50px;
+  }

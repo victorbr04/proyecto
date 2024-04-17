@@ -75,8 +75,12 @@
                                 } else {
                                     echo "No se encontraron grupos";
                                 }
+                                if($fila['grupo']==""){
+                                    echo '<option value="" selected><b>Sin grupo</b></option>';
+                                }else{
+                                    echo '<option value=""><b>Sin grupo</b></option>';
+                                }
                                 ?>
-                                    <option value="">sin grupo</option>
                                 </select>
                             <input type="hidden" name="grupousuario" value="<?php echo $fila['nombre']; ?>">
                             <button type="submit" class="mas">Cambiar</button> 
@@ -150,7 +154,7 @@
         </div>
 </div>
 
-<?php ventanapassw(); ?>
+<?php ventanamensaje(); ?>
 
 
 <footer class="footer">

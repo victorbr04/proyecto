@@ -18,12 +18,12 @@ if(isset($_POST["cambiarcontraseña"])){
                 exit();    
             } else {
                 echo "Error: " . $update . "<br>" . $conexion->error;
-                $_SESSION['contraseña'] = "<b>Error en la base de datos</b>";
+                $_SESSION['mensaje'] = "<b>Error en la base de datos</b>";
                 header("Location: index.php");
                 exit();    
             }
     }else{
-        $_SESSION['contraseña'] = "<b>Error</b></p> Las contraseñas no coinciden";
+        $_SESSION['mensaje'] = "<b>Error</b></p> Las contraseñas no coinciden";
             header("Location: index.php");
                 exit(); 
     }   
@@ -43,12 +43,12 @@ if(isset($_POST["restablecercontraseña"])){
             // Ejecutar la consulta
             if ($conexion->query($update) === TRUE) {
 
-                $_SESSION['contraseña']="Contraseña restablecida con exito";
+                $_SESSION['mensaje']="Contraseña restablecida con exito";
 
                 header("Location: usuarios.php");
                 exit();    
             } else {
-                $_SESSION['contraseña'] = "<b>Error en la base de datos</b>";
+                $_SESSION['mensaje'] = "<b>Error en la base de datos</b>";
                  header("Location: usuarios.php");
                 exit();
                  echo "Error: " . $update . "<br>" . $conexion->error;
@@ -59,6 +59,9 @@ if(isset($_POST["restablecercontraseña"])){
 if(isset($_POST["rolusuario"])){
     $usuario = $_POST["rolusuario"]; 
     $rol = $_POST["rol"];
+    if($_SESSION["username"]==$usuario){
+        $_SESSION['rol'] = $post["rol"];
+    }
     $update = "UPDATE `proyecto`.`usuarios` SET `rol` = '$rol' WHERE (`nombre` = '$usuario')";
     
     $conexion=bbdd();
@@ -76,7 +79,13 @@ if(isset($_POST["rolusuario"])){
 if(isset($_POST["grupousuario"])){
     $usuario = $_POST["grupousuario"]; 
     $grupo = $_POST["grupo"];
-    $update = "UPDATE `proyecto`.`usuarios` SET `grupo` = '$grupo' WHERE (`nombre` = '$usuario')";
+
+    if($_POST["grupo"]==""){
+        $grupo = 'NULL';
+        $update = "UPDATE `proyecto`.`usuarios` SET `grupo` = $grupo WHERE (`nombre` = '$usuario')";
+    }else{
+        $update = "UPDATE `proyecto`.`usuarios` SET `grupo` = '$grupo' WHERE (`nombre` = '$usuario')";
+    }
     
     $conexion=bbdd();
     // Ejecutar la consulta
@@ -96,6 +105,7 @@ if(isset($_POST["nuevogrupo"])){
     $conexion=bbdd();
     // Ejecutar la consulta
     if ($conexion->query($sql) === TRUE) {
+        $_SESSION['mensaje'] = "Nuevo grupo añadido";
         header("Location: usuarios.php");
         exit();    } else {
         echo "Error: " . $sql . "<br>" . $conexion->error;
@@ -107,14 +117,18 @@ if(isset($_POST["nuevogrupo"])){
 // borrar un grupo
 if(isset($_POST["eliminargrupo"])){
     $grupo = $_POST["grupo"];
+
     $delete = "DELETE FROM `grupo` WHERE (`nombre` = '$grupo')";
 
     $conexion=bbdd();
     // Ejecutar la consulta
     if ($conexion->query($delete) === TRUE) {
+        $_SESSION['mensaje'] = "Grupo Eliminado";
         header("Location: usuarios.php");
         exit();    } else {
         echo "Error: " . $delete . "<br>" . $conexion->error;
+        $_SESSION['mensaje'] = "<b>Error</b></p>El grupo no esta vacío";
+        header("Location: usuarios.php");
     }
     // Cerrar la conexión
     $conexion->close();

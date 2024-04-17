@@ -30,7 +30,7 @@
         <?php camera();?>
             <?php cameradel();?>
             <?php cuenta();?>
-            <?php ventanapassw();?>
+            <?php ventanamensaje();?>
 
 <div class="container">
     <div class="camera-grid">

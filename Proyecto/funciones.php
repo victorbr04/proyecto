@@ -159,16 +159,16 @@ function select_grupo_cam(){
     echo '</select>';
 }
 
-function ventanapassw(){
+function ventanamensaje(){
     
-    if (isset($_SESSION['contraseña'])) {
+    if (isset($_SESSION['mensaje'])) {
         echo '<div id="myModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
-                <p>'.$_SESSION['contraseña'].'</p>
+                <p>'.$_SESSION['mensaje'].'</p>
             </div>
         </div>';
-         unset($_SESSION['contraseña']);
+         unset($_SESSION['mensaje']);
     }
 }
 ?>

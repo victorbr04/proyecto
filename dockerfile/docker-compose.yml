@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  web_server1:
+    build:
+      context: .
+      dockerfile: dockerfile
+    volumes:
+      - /home/victor/proyecto/web:/var/www/html
+
+  web_server2:
+    build:
+      context: .
+      dockerfile: dockerfile
+    volumes:
+      - /home/victor/proyecto/web:/var/www/html

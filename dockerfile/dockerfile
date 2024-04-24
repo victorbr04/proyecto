@@ -1,0 +1,30 @@
+FROM ubuntu:latest
+
+# Establece variables de entorno para evitar interacciones durante la instalación
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Europe/Berlin
+
+# Ejecuta actualizaciones e instalaciones de paquetes necesarios
+RUN apt-get update && \
+    apt-get install -y apache2 php8.1 php8.1-fpm php8.1-mysql php8.1-redis iproute2 nano && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Deshabilita el sitio por defecto de Apache
+RUN a2dissite 000-default.conf
+
+# Habilita el sitio SSL por defecto
+RUN a2ensite default-ssl.conf
+
+# Habilita los módulos SSL, rewrite y proxy_fcgi, y deshabilita mpm_prefork
+RUN a2enmod ssl rewrite proxy_fcgi mpm_event http2 && \
+    a2dismod mpm_prefork
+
+# Configura PHP para usar Redis como almacenamiento de sesión
+RUN echo "session.save_handler = redis" >> /etc/php/8.1/fpm/php.ini \
+    && echo "session.save_path = tcp://172.18.0.1:6379" >> /etc/php/8.1/fpm/php.ini
+
+# Copia el archivo de configuración de Apache SSL
+COPY default-ssl.conf /etc/apache2/sites-available/default-ssl.conf
+
+CMD ["sh", "-c", "service php8.1-fpm start && apachectl -D FOREGROUND"]
